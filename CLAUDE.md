@@ -1,4 +1,4 @@
-# Fragio — rules for every change
+# Custom NextJS ShadCN Dashboard - Rules to be followed everytime
 
 Next.js 16 (App Router) · React 19 · Tailwind v4 · shadcn (`base-vega` style on **Base UI**) · recharts · lucide.
 

@@ -1,301 +1,253 @@
-<p align="center">
-   <a href="https://shadcnstudio.com/templates/admin-dashboard-free/admincn" target="_blank">
-      <img src="https://cdn.shadcnstudio.com/ss-assets/logo/logo.png" alt="admincn-logo" width="32px" height="32px">
-   </a>
-</p>
+# Custom NextJS ShadCN Dashboard
 
-<h1 align="center">
-   <a href="https://shadcnstudio.com/templates/admin-dashboard-free/admincn" target="_blank" align="center">
-      AdminCN - Free Shadcn Admin Dashboard Template
-   </a>
-</h1>
+A custom admin dashboard, a reusable boilerplate for new projects, and a library of custom-built, data-driven
+components.
 
-<p align="start">AdminCN Free is a responsive Next.js admin dashboard template built with Shadcn UI and Tailwind CSS. It ships with an orders dashboard, Mail, Calendar & Users apps, authentication pages, form layouts, data tables, and 1000+ component variants to help you build your next admin panel faster.</p>
+The app runs on Next.js 16 (App Router), React 19, Tailwind CSS v4 and shadcn/ui (`base-vega` style on
+**Base UI**). Pages are built from a shared **global component layer** with a single colour vocabulary (`tone`), so a
+new screen is mostly typed data plus a few components put together.
 
-![GitHub](https://img.shields.io/github/license/shadcnstudio/shadcn-nextjs-admincn-admin-template-free) ![GitHub issues](https://img.shields.io/github/issues/shadcnstudio/shadcn-nextjs-admincn-admin-template-free) ![GitHub closed issues](https://img.shields.io/github/issues-closed/shadcnstudio/shadcn-nextjs-admincn-admin-template-free) ![Twitter Follow](https://img.shields.io/twitter/follow/ShadcnStudio?style=social)
-
-<kbd>[![AdminCN Free - Demo Screenshot](https://cdn.shadcnstudio.com/ss-assets/landing-page/template-page/admin-dashboard/applications/admincn-free/readme-image.png)](https://shadcn-nextjs-admincn-admin-template-free.vercel.app/dashboard/orders)</kbd>
-
-## Introduction 📊
-
-AdminCN Free is built with Next.js, Shadcn UI, and Tailwind CSS, offering a production-ready admin dashboard to kickstart your next project. It includes an orders dashboard, Mail, Calendar & Users apps, authentication pages, form layouts, form validation, and a data table.
-
-[View Demo](https://shadcn-nextjs-admincn-admin-template-free.vercel.app/dashboard/orders)
-
-[View Documentation](https://shadcnstudio.com/docs/documentation-admin/getting-started)
-
-<p>
-   Supported by
-   <a href="https://shadcnstudio.com" target="_blank">
-      Shadcn Studio
-   </a>
-   , with a commitment to empowering the open-source community.
-</p>
-
-## Key Features ✨
-
-- **Orders Dashboard** - Ready-to-use dashboard layout with statistics, charts, and widgets
-- **Apps** - Mail, Calendar, and Users apps out of the box
-- **Authentication Pages** - Login, Register, Forgot Password, Verify Email, Reset Password, and Two Steps Verification
-- **Forms & Tables** - Vertical & Horizontal form layouts, form validation, and a data table
-- **Built with Next.js** - App Router based, fast, SEO-friendly React framework
-- **Tailwind CSS v4** - Easy theming and utility-based styling
-- **Responsive & Mobile-First** - Designed to look great on all devices
-- **1000+ Shadcn Component Variants** - Statistics, charts, and widgets included
-
-## Folder Structure
-
-```
-|-- public/                                    # Static assets served from the site root
-|   |-- images/                                # Public images, logos, and media
-|-- src/                                       # Application source code
-|   |-- app/                                   # Next.js App Router routes and layouts
-|   |   |-- favicon.ico                        # Browser favicon
-|   |   |-- globals.css                        # Tailwind CSS, CSS variables, and theme tokens
-|   |   |-- layout.tsx                         # Root layout, fonts, metadata, and providers
-|   |   |-- not-found.tsx                      # Custom 404 page
-|   |   |-- server/                            # Server Actions and server-only helpers
-|   |   |-- api/                               # Route handlers used by demo features
-|   |   |-- (pages)/                           # Admin shell routes with sidebar and header
-|   |   |   |-- dashboard/                      # Orders dashboard
-|   |   |   |-- apps/                           # Calendar, mail, users
-|   |   |   |-- pages/                          # Profile and settings
-|   |   |   |-- datatable/                      # Data table
-|   |   |   |-- forms/                          # Form layouts and validation
-|   |   |-- (blank)/                           # Routes without the admin shell
-|   |   |   |-- pages/auth/                     # Authentication screens
-|   |   |   |-- pages/misc/                     # Error page
-|   |-- assets/                                # Local data files, SVGs, and static helpers
-|   |   |-- data/                               # Constants and option data
-|   |   |-- svg/                                # SVG assets used by the UI
-|   |-- components/                            # Shared React components
-|   |   |-- layout/                             # Sidebar, header, footer, and shell pieces
-|   |   |-- shared/                             # Shared UI components
-|   |   |-- ui/                                 # shadcn/ui primitives
-|   |   |-- Providers.tsx                       # App provider wrapper
-|   |   |-- ThemeProvider.tsx                   # Theme provider wrapper
-|   |-- configs/                               # Template configuration files
-|   |   |-- navConfig.tsx                       # Sidebar menu structure and icons
-|   |   |-- themeConfig.ts                      # Theme config
-|   |   |-- mailConfig.ts                       # Mail app config
-|   |-- fake-db/                               # Mock data used by demos before API integration
-|   |-- hooks/                                 # Reusable client hooks
-|   |-- lib/                                   # General utilities and shared helpers
-|   |-- types/                                 # Shared TypeScript interfaces and types
-|   |-- utils/                                 # Feature-specific helper functions
-|   |-- views/                                 # Page-level UI composed by route files
-|   |   |-- apps/                              # App view modules
-|   |   |-- dashboards/                        # Dashboard charts, statistics, and widgets
-|   |   |-- datatables/                        # Data table views
-|   |   |-- forms/                             # Form layout and validation views
-|   |   |-- pages/                             # Auth, misc, profile, and settings views
-|-- .env.example                               # Environment variable reference
-|-- components.json                            # shadcn/ui aliases and registry config
-|-- eslint.config.mjs                          # ESLint configuration
-|-- next.config.ts                             # Next.js configuration
-|-- package.json                               # Scripts and dependencies
-|-- postcss.config.mjs                         # Tailwind CSS v4 PostCSS setup
-|-- tsconfig.json                              # TypeScript compiler and path aliases
-|-- vercel.json                                # Vercel deployment configuration
-```
-
-**Key UI Sections**
-
-- **Dashboard** - Orders overview with statistics, charts, and widgets
-- **Apps** - Mail, Calendar, and Users management
-- **Authentication** - Login, Register, and account recovery flows
-- **Forms & Tables** - Layouts, validation, and data table views
-- **User Pages** - Profile and account settings
+> Started from [AdminCN Free](https://shadcnstudio.com/templates/admin-dashboard-free/admincn) by
+> shadcn/studio (MIT). See [Credits & License](#credits--license).
 
 ---
 
-## What's Included 📦
+## Highlights
 
-- Dashboard
-  - Orders Dashboard
-- Apps
-  - Mail
-  - Calendar
-  - Users
-- Pages
-  - User Settings
-  - User Profile
-  - Login Page
-  - Register Page
-  - Forgot Password Page
-  - Verify Email Page
-  - Reset Password Page
-  - Two Steps Verification Page
-  - Error Page
-- Forms & Tables
-  - Form Layouts
-  - Form Validation
-  - Data Table
-- Components
-  - 1000+ Shadcn Component Variants
-  - Statistics, Charts & Widgets
-- Miscellaneous
-  - Menu Levels
-  - Support
-  - Documentation
+- **Reusable component system**: `src/components/global/` holds generic, domain-free components (stats, list rows,
+  status pills, steppers, phase tracks, meters, charts). Data comes in through props, and visual differences are
+  `cva` variants.
+- **One colour vocabulary**: every component is coloured through the shared `tone` prop, which maps to design
+  tokens in `globals.css`. There are no hard-coded colours, and light and dark themes come for free.
+- **Monochrome design system**: data uses `primary` and its opacity steps. Status hues (`success`, `warning`,
+  `info`, `danger`) are used only where the colour means something.
+- **Modular feature code**: route → view → sections. Mock data lives in `fake-db/`, types in `types/`, and the
+  domain-to-UI mapping in each view's `config.tsx`.
+- **Ready-made pages**: two dashboards, Mail / Calendar / Users apps, auth flows, forms, data tables, and profile
+  and settings pages.
+- **Strict tooling**: TypeScript, ESLint (import grouping, stylistic rules) and Prettier with Tailwind class sorting.
 
-## What's in Premium Version 💎
+## Tech Stack
 
-| Feature Area         | Admin Free                                                                                              | Admin Pro                                                                                                                                                                                                                                                                                |
-| -------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dashboard Demo       | [AdminCN Free Dashboard](https://shadcn-nextjs-admincn-admin-template-free.vercel.app/dashboard/orders) | [AdminCN Pro Dashboard](https://shadcn-nextjs-admincn-admin-template.vercel.app/dashboard/orders)                                                                                                                                                                                        |
-| Get Dashboard        | [Download](https://shadcnstudio.com/templates/admin-dashboard-free/admincn)                             | [Purchase](https://shadcnstudio.com/#pricing)                                                                                                                                                                                                                                            |
-| Features             | Theme Toggle, Limited functionality without state management, Limited pages version, static data        | Theme Toggle, Theme Customizer, More functionality with Zustand state management, More pages versions, Multiple variants of components and pages, data with dynamic state/fake-db                                                                                                        |
-| Dashboard            | Orders dashboard                                                                                        | Sales, Finance, Logistics, Productivity, Campaign, Analytics, Payments, eCommerce, Orders dashboards                                                                                                                                                                                     |
-| Dashboard Layouts    | —                                                                                                       | Horizontal Layout, Full Navbar Layout, Split Layout, Icon Menu Layout, Paper Layout                                                                                                                                                                                                      |
-| Apps                 | Mail, Calendar, Users                                                                                   | Mail, Chat, Kanban, Calendar, Contact, Users, Roles & Permissions                                                                                                                                                                                                                        |
-| Full Apps Template   | —                                                                                                       | [PropXYZ](https://shadcn-nextjs-propxyz-admin-template.vercel.app/), [CommerceO](https://shadcn-nextjs-commerceo-admin-template.vercel.app/), [Calendrix](https://shadcn-nextjs-calendrix-app-template.vercel.app/), [Promptly](https://shadcn-nextjs-promptly-app-template.vercel.app/) |
-| Landing Page         | —                                                                                                       | ✅                                                                                                                                                                                                                                                                                       |
-| User Settings        | General, Workspace                                                                                      | General, Notifications, Integrations, Members, Security, Billing, Workspace                                                                                                                                                                                                              |
-| User Profile         | Profile, Connections                                                                                    | Profile, Connections, Teams, Projects                                                                                                                                                                                                                                                    |
-| Pricing              | —                                                                                                       | ✅                                                                                                                                                                                                                                                                                       |
-| FAQ                  | —                                                                                                       | ✅                                                                                                                                                                                                                                                                                       |
-| Onboarding           | —                                                                                                       | 2 Variants                                                                                                                                                                                                                                                                               |
-| Authentication Pages | Login, Register, Forgot Password, Verify Email, Reset Password, Two Steps - All pages have 1 Variant    | Login , Register , Forgot Password , Verify Email , Reset Password , Two Steps - All pages have 3 Variants                                                                                                                                                                               |
-| Error Pages          | 1 Variant                                                                                               | 4 Variants                                                                                                                                                                                                                                                                               |
-| Empty State Pages    | —                                                                                                       | 2 Variants                                                                                                                                                                                                                                                                               |
-| Form Layouts         | Vertical, Horizontal                                                                                    | Vertical, Horizontal, Sticky with more forms & variants                                                                                                                                                                                                                                  |
-| Form Validation      | ✅                                                                                                      | Included, with more forms & variants                                                                                                                                                                                                                                                     |
-| Form Wizard          | —                                                                                                       | Icons stepper, Number stepper                                                                                                                                                                                                                                                            |
-| Data Table           | ✅                                                                                                      | Included with more variants                                                                                                                                                                                                                                                              |
+| Area          | Library                                                               |
+| ------------- | --------------------------------------------------------------------- |
+| Framework     | Next.js 16 (App Router, Server Actions), React 19                     |
+| Styling       | Tailwind CSS v4, `tw-animate-css`, oklch design tokens, `next-themes` |
+| UI primitives | shadcn/ui on Base UI (`@base-ui/react`), `class-variance-authority`   |
+| Icons         | `lucide-react`                                                        |
+| Charts        | `recharts` via the shadcn `ChartContainer`                            |
+| Forms         | `react-hook-form`, `zod`, `@hookform/resolvers`, `input-otp`          |
+| Tables        | `@tanstack/react-table`                                               |
+| State in URL  | `nuqs`                                                                |
+| Misc          | `date-fns`, `cmdk`, `sonner`, `react-resizable-panels`                |
 
-## 🚀 Quick Start
+## What's Included
+
+| Section        | Route                                                                 | Notes                                                                                     |
+| -------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Orders         | `/dashboard/orders`                                                   | Default home page (`/` redirects here). Statistics, sales metrics chart, earnings widgets |
+| Users          | `/dashboard/users`                                                    | Operations dashboard built entirely on the global component layer (see below)             |
+| Mail           | `/apps/mail`                                                          | Resizable inbox, mail display                                                             |
+| Calendar       | `/apps/calendar`                                                      | Event calendar with current-time indicator                                                |
+| Users app      | `/apps/users/list`, `/apps/users/view`                                | Paginated list, add/edit user sheet, user detail tabs                                     |
+| User Profile   | `/pages/user-profile?view=profile \| connections`                     |                                                                                           |
+| User Settings  | `/pages/user-settings?setting=general \| workspace`                   |                                                                                           |
+| Authentication | `/pages/auth/*`                                                       | Login, Register, Forgot Password, Verify Email, Reset Password, Two Steps                 |
+| Error          | `/pages/misc/error-page`, custom `not-found`                          |                                                                                           |
+| Forms          | `/forms/form-layouts/{vertical,horizontal}`, `/forms/form-validation` | `react-hook-form` + `zod`                                                                 |
+| Data Table     | `/datatable`                                                          | Basic, filters, and pinnable-columns variants                                             |
+
+### The Users dashboard (reference implementation)
+
+`/dashboard/users` is the reference for how new pages should be built. It shows a greenhouse operations overview:
+season progress, today's floor, per-house cards, crop cycles, pest traps, dispatch orders, tasks and activity. Every
+section is a thin file under `views/dashboards/users/sections/` that only combines global components. All data comes
+from `fake-db/dashboards/users.ts` and is typed in `types/dashboards/users-types.ts`.
+
+## Architecture
+
+```text
+src/
+  app/(pages)/<route>/page.tsx      → thin: loads data, renders the view
+  views/<area>/<feature>/
+    index.tsx                       → page composition / grid only
+    config.tsx                      → domain → UI mapping (tones, icons, labels, routes)
+    sections/*.tsx                  → one file per section, composes global components
+  components/
+    ui/                             → shadcn primitives (wrap them in global/, don't edit for feature needs)
+    global/
+      variants/tone.ts              → shared colour vocabulary (Tone, toneStyle, toneFor, createToneScale)
+      micro/                        → atoms
+      layout/                       → page-level building blocks
+      data-display/                 → stats, rows, pills, progress and timeline components
+      charts/                       → chart components
+      inputs/                       → input controls
+  fake-db/<area>/                   → typed mock data
+  types/<area>/                     → domain types
+  utils/format-utils.ts             → number / unit / currency / percent formatting
+```
+
+### Global component inventory
+
+Check this table before writing any UI.
+
+| Need                                   | Component                                     |
+| -------------------------------------- | --------------------------------------------- |
+| Page title + copy + actions            | `PageHeader`                                  |
+| Any card section                       | `SectionCard` (`variant="accent"`, `leading`) |
+| Labelled number / KPI / mini stat      | `Stat` (`variant="plain" \| "tile"`, `size`)  |
+| Row of KPIs                            | `StatGroup` (`variant="divided" \| "plain"`)  |
+| Status / phase chip                    | `StatusPill`                                  |
+| Trend %                                | `DeltaBadge`                                  |
+| Series key                             | `Legend`                                      |
+| Any list (tasks, feed, orders, people) | `ListRowGroup` + `ListRow`                    |
+| Multi-step status                      | `Stepper`                                     |
+| Proportional timeline with "today"     | `PhaseTrack`                                  |
+| Value vs limit                         | `ThresholdBar` / `ThresholdMeter`             |
+| Parts of a total                       | `SegmentedBar`                                |
+| Value vs target                        | `ProgressMeter`                               |
+| Line / area trend, comparison series   | `AreaTrendChart`                              |
+| Chart tooltip                          | `ChartTooltipPanel`                           |
+| Tiny trend / recent histogram          | `Sparkline` / `MiniBars`                      |
+| Single-choice switch                   | `SegmentedControl`                            |
+| Icon in a tinted square / icon + text  | `IconTile` / `MetaItem`                       |
+| "Go somewhere →" link button           | `ActionLink`                                  |
+| Initials avatar / status dots          | `InitialsAvatar` / `ColorDot`, `LiveDot`      |
+
+### Colour and theming
+
+- Tokens live in `src/app/globals.css` (oklch, light and `.dark`).
+- Components set `--tone` with `toneStyle(tone)` and style with `bg-(--tone)/12`, `text-(--tone)`,
+  `border-(--tone)`.
+- **Data / brand** → `primary`, `primary-60`, `primary-30`. Use `createToneScale(keys)` to tell parts of a whole
+  apart.
+- **Status** → `success` / `warning` / `info` / `danger`, only where the colour carries meaning.
+- **Quiet** → `neutral` / `muted`.
+- To add a new colour, add a token to `globals.css` and a key to `toneTokens`. Never use raw palette classes such as
+  `text-green-600`.
+
+## Building a New Page
+
+1. Add types in `src/types/<area>/` and typed mock data in `src/fake-db/<area>/`. Keep the data plain and
+   serialisable: no JSX, no tones.
+2. Create `src/views/<area>/<feature>/` with `index.tsx` (grid only), `config.tsx` (icons, tones, labels and routes
+   mapped from the domain) and one `sections/*.tsx` file per card.
+3. Build sections only from global components. If something is missing, add it to `src/components/global/` as a
+   generic, prop-driven component, or add a `cva` variant to an existing one. Never copy a component to change its
+   colour or size.
+4. Add a thin route in `src/app/(pages)/<route>/page.tsx` and, if needed, a link in `src/configs/navConfig.tsx`.
+5. Run the checks: `npx prettier --check`, `npx eslint`, `npx tsc --noEmit`.
+
+The full rule set, including the pre-merge checklist, is in [CLAUDE.md](CLAUDE.md).
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18, 20, or 22+
-- pnpm (recommended) or npm
+- Node.js 20.9 or later (required by Next.js 16)
+- npm (the repo ships a `package-lock.json`)
 
-### Installation
+### Install and run
 
-1. **Install dependencies:**
+```bash
+npm install
+npm run dev        # http://localhost:3000 → redirects to /dashboard/orders
+```
 
-   ```bash
-   pnpm install
-   ```
+### Production
 
-2. **Start the development server:**
+```bash
+npm run build
+npm run start
+```
 
-   ```bash
-   pnpm dev
-   ```
+### Environment variables
 
-   The site will be available at `http://localhost:3000`
+Copy `.env.example` to `.env`:
 
-3. **Build for production:**
+| Variable              | Purpose                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------- |
+| `BASEPATH`            | Optional sub-path to serve the app from (`next.config.ts` → `basePath`)                  |
+| `NEXT_PUBLIC_APP_URL` | Public URL used for Open Graph metadata                                                  |
+| `EMAIL`               | shadcn/studio account email, only needed to pull `@ss-*` registry items via `shadcn add` |
+| `LICENSE_KEY`         | shadcn/studio license key, same as above                                                 |
 
-   ```bash
-   pnpm build
-   ```
+## Scripts
 
-4. **Preview the production build:**
+| Command                      | Action                                          |
+| ---------------------------- | ----------------------------------------------- |
+| `npm run dev`                | Start the Next.js dev server                    |
+| `npm run build`              | Create a production build                       |
+| `npm run start`              | Serve the production build                      |
+| `npm run lint`               | Run ESLint                                      |
+| `npm run lint:fix`           | Run ESLint and auto-fix                         |
+| `npm run format`             | Format `src/**/*.{js,jsx,ts,tsx}` with Prettier |
+| `npm run check-types`        | Type-check with `tsc --noEmit`                  |
+| `npm run clean`              | Remove `.next` and `dist`                       |
+| `npm run clean:node_modules` | Remove `.next`, `dist` and `node_modules`       |
 
-   ```bash
-   pnpm start
-   ```
+## Code Style
 
-## 🧞 Available Commands
+- Prettier: no semicolons, single quotes (JSX too), print width 120, no trailing commas, Tailwind class sorting
+  (also inside `cn`/`clsx`/`cva`).
+- ESLint enforces grouped imports with `// X Imports` comments (React → Next → Third-party → Type → Component →
+  Config → Util) and `import type` for types.
+- Use `'use client'` only for components with state, effects or recharts. Sections stay server components otherwise.
+- Pages, views and sections use default exports. Global components use named exports (plus their `…Variants` and
+  `…Props`).
+- Base UI, not Radix: links rendered as buttons use `render={<Link href='…' />} nativeButton={false}`.
 
-The template comes with several pre-configured scripts to help you with development, building, and maintaining your project. All scripts can be run using your package manager of choice (npm, pnpm, yarn, or bun) from the root of the project.
+## Folder Structure
 
-| Command       | Action                                                                                                                                 |
-| :------------ | :------------------------------------------------------------------------------------------------------------------------------------- |
-| `dev`         | Starts the Astro development server with hot-reload enabled. Your application will be available at http://localhost:3000/              |
-| `build`       | Creates an optimized production build of your application. This command generates static files and optimizes your code for deployment. |
-| `start`       | Preview production site locally. Use this to test your production build locally before deploying.                                      |
-| `lint`        | Runs ESLint to check your code for potential errors and code quality issues. This helps maintain clean and consistent code.            |
-| `lint:fix`    | Runs ESLint and automatically fixes problems where possible.                                                                           |
-| `format`      | Formats all files using Prettier to ensure consistent code style.                                                                      |
-| `clean`       | Cleans the project by removing temporary files and build artifacts.                                                                    |
-| `check-types` | Checks TypeScript types to catch type errors before building or deploying.                                                             |
+```text
+|-- public/images/                 # Avatars, brands, flags, widget and datatable images, OG image
+|-- src/
+|   |-- app/
+|   |   |-- (pages)/               # Routes inside the admin shell (sidebar + header)
+|   |   |   |-- dashboard/         # orders, users
+|   |   |   |-- apps/              # mail, calendar, users (list, view)
+|   |   |   |-- pages/             # user-profile, user-settings
+|   |   |   |-- datatable/
+|   |   |   |-- forms/             # form-layouts (vertical, horizontal), form-validation
+|   |   |-- (blank)/pages/         # Routes without the shell: auth/*, misc/error-page
+|   |   |-- api/nav-apps/          # Route handler for the sidebar "apps" list
+|   |   |-- server/actions.ts      # Server Actions reading from fake-db (swap for real queries)
+|   |   |-- globals.css            # Tailwind v4 + design tokens
+|   |   |-- layout.tsx             # Fonts, metadata, providers
+|   |   |-- not-found.tsx
+|   |-- assets/                    # Option data and SVGs
+|   |-- components/
+|   |   |-- global/                # Reusable component system (see Architecture)
+|   |   |-- layout/                # Sidebar, Header, Footer, BlankLayout, ModeToggle, ScrollToTop
+|   |   |-- shared/                # Logo, ProfileDropdown, LanguageDropdown
+|   |   |-- ui/                    # shadcn/ui primitives
+|   |   |-- Providers.tsx, ThemeProvider.tsx
+|   |-- configs/                   # navConfig, themeConfig, mailConfig
+|   |-- fake-db/                   # Typed mock data: apps, dashboards, pages
+|   |-- hooks/                     # use-mail-app, use-user-app, use-pagination, use-mobile, calendar hooks
+|   |-- lib/                       # cn() utility, nav-apps helper
+|   |-- types/                     # Domain types: apps, dashboards, pages
+|   |-- utils/                     # format-utils, calendar-utils
+|   |-- views/                     # Page compositions: apps, dashboards, datatables, forms, pages
+|-- CLAUDE.md                      # Contributor and AI-assistant rules for this codebase
+|-- components.json                # shadcn aliases + shadcn/studio registries
+|-- next.config.ts                 # basePath, redirects
+|-- vercel.json                    # Git auto-deploys disabled
+```
 
-## 🌐 Deployment
+## Template Leftovers
 
-Check out our [Deployment docs](https://shadcnstudio.com/docs/documentation-admin/deployment)
+These pieces come from the original template. Remove them when they are not needed:
 
-## Documentation 📚
+- Sidebar entries marked **Pro** in `src/configs/navConfig.tsx`, which link to external AdminCN Pro demos.
+- `src/components/layout/UpgradePro.tsx`, the "Upgrade to Pro" button rendered from `layout.tsx`.
+- `src/app/api/nav-apps/route.ts` and `src/lib/nav-apps.ts`, which fetch the sidebar apps list from the shadcn/studio
+  CDN.
+- Metadata in `src/app/layout.tsx` and `themeConfig.templateName`, which still use the AdminCN name.
 
-For comprehensive documentation, please visit [shadcn/studio documentation](https://shadcnstudio.com/docs/documentation-admin/introduction).
+## Credits & License
 
-## Changelog 📆
-
-Please refer to the [CHANGELOG file](CHANGELOG.md). We will add a detailed release notes to each new release.
-
-## License &copy;
-
-- Copyright © [ShadcnStudio](https://shadcnstudio.com/)
-- Licensed under [MIT](LICENSE)
-- All our free items are Open Source and licensed under MIT. You can use our free items for personal as well as commercial purposes. We just need attribution from your end. Copy the link below and paste it in the footer of your web application or project.
-  ```html
-  <a href="https://shadcnstudio.com/">ShadcnStudio</a>
-  ```
-
----
-
-<br />
-
-<a href="https://shadcnstudio.com" target="_blank">
-  <img src="https://cdn.shadcnstudio.com/ss-assets/smm/marketing/shadcn-studio-smm-banner.png" alt="shadcn/studio banner" width="1200">
-</a>
-
-<p>
-   <a href="https://shadcnstudio.com" target="_blank">
-      shadcn/studio
-   </a>
-   is an open-source collection of copy-and-paste shadcn components, blocks, and templates - paired with a powerful theme generator & AI Tools to craft, customize, and ship faster. 🚀
-</p>
-
-## Overview 🌏
-
-**This isn&apos;t a traditional component library or a replacement for Shadcn**. Instead, it&apos;s a unique collection offers customizable variants of components, blocks, and templates. Preview, customize, and copy-paste them into your apps with ease.
-
-Building on the solid foundation of the Shadcn components & blocks, we&apos;ve enhanced it with custom-designed components & blocks to give you a head start. This allows you to craft, customize, and ship your projects faster and more efficiently.
-
-### Not a standard library, but a distribution of components
-
-Following the philosophy of Shadcn, shadcn/studio isn&apos;t a conventional &quot;install-from-NPM&quot; library. Rather, it&apos;s an open-source distribution of components designed for maximum adaptability. You can copy the code, modify styles, adjust logic, or integrate it with other tools—free from the limitations of typical libraries. This &quot;open code&quot; model empowers you to customize with confidence and creativity.
-
-## Why should I use shadcn/studio? 💡
-
-shadcn/ui aims to provide core components with a unique distribution system, allowing developers to copy and paste reusable, customizable UI elements directly into their codebase.
-
-While this approach offers flexibility and control, it comes with some limitations: a lack of diverse component variants examples, limited theme customization options, and limited pre-built blocks. Additionally, its extensive customization options, though powerful, can sometimes feel overwhelming, especially for those seeking a more guided or streamlined experience.
-
-## Community 🤝
-
-Join the shadcn/studio community to discuss the library, ask questions, and share your experiences:
-
-- 🐦 [Follow us on Twitter](https://x.com/ShadCNStudio)
-- 🎮 [Join us on Discord](https://discord.com/invite/kBHkY7DekX)
-
-## Credits 🤘
-
-We are grateful for the contributions of the open-source community, particularly:
-
-- [shadcn/ui](https://ui.shadcn.com/)
-- [tweakcn](https://tweakcn.com/) (Our Theme Generator is heavily inspired by tweakcn)
-
-These projects form the backbone of shadcn/studio, allowing us to build a powerful copy-and-paste components.
-
-## Useful Links 🎁
-
-- [Shadcn Blocks](https://shadcnstudio.com/blocks)
-- [Shadcn Templates](https://shadcnstudio.com/templates)
-- [Shadcn Admin Dashboard](https://shadcnstudio.com/templates/admin-dashboard)
-- [Shadcn Figma UI Kit](https://shadcnstudio.com/figma)
-- [Shadcn Theme Generator](https://shadcnstudio.com/theme-generator)
-- [Shadcn MCP Server](https://shadcnstudio.com/mcp)
-- [Shadcn IDE Extension](https://shadcnstudio.com/ide-extension)
-- [Shadcn Components](https://shadcnstudio.com/components)
-- [Shadcn Figma to Code](https://shadcnstudio.com/figma-plugin)
-
-## Social Media :earth_africa:
-
-- [x](https://x.com/ShadcnStudio)
-- [Discord](https://discord.com/invite/kBHkY7DekX)
-- [YouTube](https://www.youtube.com/@themeselection)
+- Based on [AdminCN Free](https://shadcnstudio.com/templates/admin-dashboard-free/admincn) by
+  [shadcn/studio](https://shadcnstudio.com/), released under the MIT license. The attribution is kept as its license
+  asks: `<a href="https://shadcnstudio.com/">ShadcnStudio</a>`.
+- Built on [shadcn/ui](https://ui.shadcn.com/) and [Base UI](https://base-ui.com/).
