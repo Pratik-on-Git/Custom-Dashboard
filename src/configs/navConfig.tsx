@@ -53,6 +53,11 @@ export const navItems: NavItem[] = [
         href: '/dashboard/orders'
       },
       {
+        icon: 'Sprout',
+        label: 'Users',
+        href: '/dashboard/users'
+      },
+      {
         icon: 'TrendingUp',
         label: 'Sales',
         href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/dashboard/sales',
