@@ -48,6 +48,11 @@ export const navItems: NavItem[] = [
     groupLabel: 'Dashboard & Layouts',
     items: [
       {
+        icon: 'LayoutDashboard',
+        label: 'Overview',
+        href: '/dashboard/overview'
+      },
+      {
         icon: 'Package',
         label: 'Orders',
         href: '/dashboard/orders'
@@ -180,10 +185,17 @@ export const navItems: NavItem[] = [
       {
         icon: 'MessageCircleIcon',
         label: 'Chat',
-        href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/apps/chat',
-        target: '_blank',
-        badge: 'Pro',
-        badgeClassName: 'right-8'
+        href: '/apps/chat'
+      },
+      {
+        icon: 'ListTodoIcon',
+        label: 'Tasks',
+        href: '/apps/tasks'
+      },
+      {
+        icon: 'PlugIcon',
+        label: 'Integrations',
+        href: '/apps/integrations'
       },
       {
         icon: 'SquareKanbanIcon',
@@ -224,6 +236,17 @@ export const navItems: NavItem[] = [
   {
     groupLabel: 'Pages',
     items: [
+      {
+        icon: 'SettingsIcon',
+        label: 'Settings',
+        childItems: [
+          { label: 'Profile', href: '/pages/settings/profile' },
+          { label: 'Account', href: '/pages/settings/account' },
+          { label: 'Appearance', href: '/pages/settings/appearance' },
+          { label: 'Notifications', href: '/pages/settings/notifications' },
+          { label: 'Display', href: '/pages/settings/display' }
+        ]
+      },
       {
         icon: 'UserCogIcon',
         label: 'User Settings',
@@ -309,13 +332,7 @@ export const navItems: NavItem[] = [
             label: 'Login',
             childItems: [
               { label: 'Login v1', href: '/pages/auth/login', target: '_blank' },
-              {
-                label: 'Login v2',
-                href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/pages/auth/login-v2',
-                target: '_blank',
-                badge: 'Pro',
-                badgeClassName: 'right-8'
-              },
+              { label: 'Login v2', href: '/pages/auth/login-v2', target: '_blank' },
               {
                 label: 'Login v3',
                 href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/pages/auth/login-v3',
@@ -432,42 +449,17 @@ export const navItems: NavItem[] = [
         label: 'Error Pages',
         childItems: [
           { label: 'Error Page', href: '/pages/misc/error-page', target: '_blank' },
-          {
-            label: 'Error Page - 404',
-            href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/pages/misc/error-page-404',
-            target: '_blank',
-            badge: 'Pro',
-            badgeClassName: 'right-8'
-          },
-          {
-            label: 'Not Authorized - 401',
-            href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/pages/misc/unauthorized-access-401',
-            target: '_blank',
-            badge: 'Pro',
-            badgeClassName: 'right-8'
-          },
-          {
-            label: 'Forbidden - 403',
-            href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/pages/misc/forbidden-403',
-            target: '_blank',
-            badge: 'Pro',
-            badgeClassName: 'right-8'
-          },
-          {
-            label: 'Server Error - 500',
-            href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/pages/misc/server-error-500',
-            target: '_blank',
-            badge: 'Pro',
-            badgeClassName: 'right-8'
-          },
-          {
-            label: 'Under Maintenance',
-            href: 'https://shadcn-nextjs-admincn-admin-template.vercel.app/pages/misc/maintenance-page',
-            target: '_blank',
-            badge: 'Pro',
-            badgeClassName: 'right-8'
-          }
+          { label: 'Not Found - 404', href: '/pages/errors/not-found' },
+          { label: 'Unauthorized - 401', href: '/pages/errors/unauthorized' },
+          { label: 'Forbidden - 403', href: '/pages/errors/forbidden' },
+          { label: 'Server Error - 500', href: '/pages/errors/internal-server-error' },
+          { label: 'Maintenance - 503', href: '/pages/errors/maintenance' }
         ]
+      },
+      {
+        icon: 'LifeBuoyIcon',
+        label: 'Help Center',
+        href: '/pages/help-center'
       },
       {
         icon: 'RocketIcon',

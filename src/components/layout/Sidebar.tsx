@@ -18,10 +18,25 @@ import type { MenuGroupSubItem, MenuItem, MenuSubItem } from '@/configs/navConfi
 
 // Component Imports
 import LogoSvg from '@/assets/svg/logo'
+import NavUser from '@/components/layout/NavUser'
+import TeamSwitcher from '@/components/layout/TeamSwitcher'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -32,12 +47,17 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSubItem
+  SidebarMenuSubItem,
+  SidebarRail,
+  useSidebar
 } from '@/components/ui/sidebar'
 
 // Config Imports
 import { navItems } from '@/configs/navConfig'
 import themeConfig from '@/configs/themeConfig'
+
+// Context Imports
+import { usePreferences } from '@/contexts/preferences-context'
 
 // Util Imports
 import { cn } from '@/lib/utils'
@@ -86,6 +106,11 @@ const SidebarGroupedMenuItems = ({
   pathname: string
   searchParams: Pick<URLSearchParams, 'get'>
 }) => {
+  const { state, isMobile } = useSidebar()
+
+  // In icon mode nested groups can't expand inline, so they open as a flyout menu instead
+  const isIconRail = state === 'collapsed' && !isMobile
+
   return (
     <SidebarGroup>
       {groupLabel && (
@@ -104,6 +129,67 @@ const SidebarGroupedMenuItems = ({
                   ? subItem.childItems.some(leaf => isLinkActive(leaf.href, leaf.activePath, pathname, searchParams))
                   : isLinkActive(subItem.href, subItem.activePath, pathname, searchParams)
               ) ?? false
+
+            if (item.childItems && isIconRail) {
+              return (
+                <SidebarMenuItem key={item.label}>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      render={<SidebarMenuButton isActive={isChildActive} className='data-active:bg-primary/10!' />}
+                    >
+                      {Tag && <Tag />}
+                      <span>{item.label}</span>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent side='right' align='start' sideOffset={8} className='min-w-52'>
+                      <DropdownMenuGroup>
+                        <DropdownMenuLabel>{item.label}</DropdownMenuLabel>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        {item.childItems.map(subItem =>
+                          isSubGroup(subItem) ? (
+                            <DropdownMenuSub key={subItem.label}>
+                              <DropdownMenuSubTrigger>{subItem.label}</DropdownMenuSubTrigger>
+                              <DropdownMenuSubContent className='min-w-48'>
+                                {subItem.childItems.map(leaf => (
+                                  <DropdownMenuItem
+                                    key={leaf.label}
+                                    render={<Link href={leaf.href} target={leaf.target} />}
+                                    className={cn(
+                                      isLinkActive(leaf.href, leaf.activePath, pathname, searchParams) &&
+                                        'bg-primary/10'
+                                    )}
+                                  >
+                                    {leaf.label}
+                                    {leaf.badge && (
+                                      <span className='text-muted-foreground ms-auto text-xs'>{leaf.badge}</span>
+                                    )}
+                                  </DropdownMenuItem>
+                                ))}
+                              </DropdownMenuSubContent>
+                            </DropdownMenuSub>
+                          ) : (
+                            <DropdownMenuItem
+                              key={subItem.label}
+                              render={<Link href={subItem.href} target={subItem.target} />}
+                              className={cn(
+                                isLinkActive(subItem.href, subItem.activePath, pathname, searchParams) &&
+                                  'bg-primary/10'
+                              )}
+                            >
+                              {subItem.label}
+                              {subItem.badge && (
+                                <span className='text-muted-foreground ms-auto text-xs'>{subItem.badge}</span>
+                              )}
+                            </DropdownMenuItem>
+                          )
+                        )}
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </SidebarMenuItem>
+              )
+            }
 
             return item.childItems ? (
               <Collapsible className='group/collapsible' key={item.label}>
@@ -276,6 +362,7 @@ const SidebarGroupedMenuItems = ({
 const SidebarLayout = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const { sidebarVariant, sidebarCollapsible, direction } = usePreferences()
 
   // Remove this state when the nav-apps API is removed. Until then, this state is used to hold the external nav-apps fetched from the API JSON.
   const [externalApps, setExternalApps] = useState<MenuItem[]>([])
@@ -314,23 +401,27 @@ const SidebarLayout = () => {
   }
 
   return (
-    <Sidebar collapsible='icon' variant='sidebar'>
+    <Sidebar collapsible={sidebarCollapsible} variant={sidebarVariant} side={direction === 'rtl' ? 'right' : 'left'}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size='lg'
-              className='gap-2.5 bg-transparent! [&>svg]:size-8'
-              render={<Link href={`${themeConfig.homePageUrl}`} />}
-            >
-              <LogoSvg className='[&_rect]:fill-sidebar [&_rect:first-child]:fill-primary' />
-              <div className='flex flex-col items-start'>
-                <span className='text-lg font-semibold text-nowrap'>{themeConfig.templateName}</span>
-                <span className='text-xs font-light text-nowrap'>Dashboard Template</span>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        {themeConfig.sidebarHeader === 'team-switcher' ? (
+          <TeamSwitcher />
+        ) : (
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                size='lg'
+                className='gap-2.5 bg-transparent! [&>svg]:size-8'
+                render={<Link href={`${themeConfig.homePageUrl}`} />}
+              >
+                <LogoSvg className='[&_rect]:fill-sidebar [&_rect:first-child]:fill-primary' />
+                <div className='flex flex-col items-start'>
+                  <span className='text-lg font-semibold text-nowrap'>{themeConfig.templateName}</span>
+                  <span className='text-xs font-light text-nowrap'>Dashboard Template</span>
+                </div>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        )}
       </SidebarHeader>
       <SidebarContent className='group-data-[collapsible=icon]:overflow-y-auto'>
         {navGroups.map((navItem, index) => {
@@ -345,6 +436,10 @@ const SidebarLayout = () => {
           )
         })}
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   )
 }

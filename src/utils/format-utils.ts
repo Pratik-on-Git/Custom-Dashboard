@@ -26,3 +26,12 @@ export const formatUnit = (value: number, unit: string, fractionDigits = 0) =>
 /** Clamp a ratio to 0–100 for bar widths. */
 export const toPercent = (value: number, max: number) =>
   max <= 0 ? 0 : Math.min(100, Math.max(0, (value / max) * 100))
+
+/** "Ada Lovelace" → "AL" (first letters of the first two words) */
+export const toInitials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(part => part[0]?.toUpperCase())
+    .join('')

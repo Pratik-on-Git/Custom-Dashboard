@@ -43,6 +43,7 @@ const FloorTodayCard = ({ today, houses, className }: FloorTodayCardProps) => {
       }
       headingId='floor-today-heading'
       className={className}
+      contentClassName='justify-between'
     >
       <Stat value={formatUnit(pickedKg, 'kg')} size='xl' suffix={`of ${formatUnit(today.plannedKg, 'kg')} planned`} />
 
@@ -64,7 +65,7 @@ const FloorTodayCard = ({ today, houses, className }: FloorTodayCardProps) => {
         />
       </div>
 
-      <div className='mt-auto flex flex-col gap-2'>
+      <div className='flex flex-col gap-2'>
         <span className='text-muted-foreground text-sm'>The last hour, five minutes a bar</span>
         <MiniBars
           values={today.lastHourKg}

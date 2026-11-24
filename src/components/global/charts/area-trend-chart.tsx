@@ -5,7 +5,7 @@ import { useId } from 'react'
 import type { ReactNode } from 'react'
 
 // Third-party Imports
-import { Area, CartesianGrid, ComposedChart, Line, ReferenceDot, XAxis, YAxis } from 'recharts'
+import { Area, Bar, CartesianGrid, ComposedChart, Line, ReferenceDot, XAxis, YAxis } from 'recharts'
 import type { TooltipContentProps } from 'recharts'
 
 // Component Imports
@@ -23,8 +23,8 @@ type AreaTrendSeries = {
   label: string
   tone: Tone
 
-  /** `area` = filled gradient + line, `line` = solid line, `dashed` = comparison line */
-  variant?: 'area' | 'line' | 'dashed'
+  /** `area` = filled gradient + line, `line` = solid line, `dashed` = comparison line, `bar` = column per category */
+  variant?: 'area' | 'line' | 'dashed' | 'bar'
 }
 
 type AreaTrendChartProps<TData extends object> = {
@@ -65,8 +65,11 @@ const ANIMATION = { animationDuration: 700, animationEasing: 'ease-out' } as con
 
 const markerShape = (series: AreaTrendSeries) => (series.variant === 'dashed' ? 'dash' : 'square')
 
+const BAR_RADIUS: [number, number, number, number] = [4, 4, 0, 0]
+
 /**
- * Global: smooth trend chart for one or more series over a category axis (e.g. this season vs last season).
+ * Global: trend chart for one or more series over a category axis (e.g. this season vs last season) — areas, lines,
+ * dashed comparison lines or bars (`series[].variant`).
  * Includes its own header (caption + legend), auto-sized y-axis, evenly spaced x ticks, a "latest" marker and a
  * comparison tooltip. Built on the ui ChartContainer + recharts.
  */
@@ -94,6 +97,7 @@ const AreaTrendChart = <TData extends object>({
   const main = series.find(item => item.variant !== 'dashed') ?? series[0]
   const comparison = series.find(item => item.variant === 'dashed')
   const latest = data.at(-1) as Record<string, string | number> | undefined
+  const hasBars = series.some(item => item.variant === 'bar')
 
   const renderTooltip = ({ active, payload }: TooltipContentProps) => {
     const datum = payload?.[0]?.payload as Record<string, string | number> | undefined
@@ -176,11 +180,27 @@ const AreaTrendChart = <TData extends object>({
             domain={[0, yMax ?? 'auto']}
             tickFormatter={value => axisFormatter(Number(value))}
           />
-          <ChartTooltip cursor={{ strokeWidth: 1 }} content={renderTooltip} />
+          <ChartTooltip
+            cursor={hasBars ? { fill: 'var(--muted)', fillOpacity: 0.6 } : { strokeWidth: 1 }}
+            content={renderTooltip}
+          />
 
           {series.map(item => {
             const variant = item.variant ?? 'area'
             const stroke = `var(--color-${item.key})`
+
+            if (variant === 'bar') {
+              return (
+                <Bar
+                  key={item.key}
+                  dataKey={item.key}
+                  fill={stroke}
+                  radius={BAR_RADIUS}
+                  maxBarSize={40}
+                  {...ANIMATION}
+                />
+              )
+            }
 
             if (variant === 'area') {
               return (

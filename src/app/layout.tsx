@@ -3,7 +3,8 @@ import type { ReactNode } from 'react'
 
 // Next Imports
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { cookies } from 'next/headers'
+import { Geist, Geist_Mono, Inter, Manrope } from 'next/font/google'
 
 // Third-party Imports
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
@@ -12,14 +13,16 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import Providers from '@/components/Providers'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
+import ScrollToTop from '@/components/layout/ScrollToTop'
+import SkipToMain from '@/components/layout/SkipToMain'
+import UpgradeProButton from '@/components/layout/UpgradePro'
+
 // Util Imports
 import { cn } from '@/lib/utils'
+import { resolvePreferences } from '@/utils/preference-utils'
 
 // Style Imports
 import './globals.css'
-import ScrollToTop from '@/components/layout/ScrollToTop'
-
-import UpgradeProButton from '@/components/layout/UpgradePro'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,6 +31,17 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
+  subsets: ['latin']
+})
+
+// Alternative UI fonts, selectable from Theme Settings / Settings → Appearance
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin']
+})
+
+const manrope = Manrope({
+  variable: '--font-manrope',
   subsets: ['latin']
 })
 
@@ -60,17 +74,30 @@ export const metadata: Metadata = {
   }
 }
 
-const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
+const RootLayout = async ({ children }: Readonly<{ children: ReactNode }>) => {
+  const cookieStore = await cookies()
+  const preferences = resolvePreferences(name => cookieStore.get(name)?.value)
+  const sidebarDefaultOpen = cookieStore.get('sidebar_state')?.value !== 'false'
+
   return (
     <html
       lang='en'
-      className={cn(geistSans.variable, geistMono.variable, 'flex min-h-full w-full antialiased')}
+      dir={preferences.direction}
+      data-font={preferences.font}
+      className={cn(
+        geistSans.variable,
+        geistMono.variable,
+        inter.variable,
+        manrope.variable,
+        'flex min-h-full w-full antialiased'
+      )}
       data-scroll-behavior='smooth'
       suppressHydrationWarning
     >
       <body className='flex min-h-full w-full flex-auto flex-col'>
+        <SkipToMain />
         <NuqsAdapter>
-          <Providers sidebarDefaultOpen={true}>
+          <Providers sidebarDefaultOpen={sidebarDefaultOpen} preferences={preferences}>
             <TooltipProvider>{children}</TooltipProvider>
           </Providers>
         </NuqsAdapter>

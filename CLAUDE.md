@@ -41,43 +41,72 @@ src/
     global/
       variants/tone.ts              → shared colour vocabulary (Tone, toneStyle, toneFor)
       micro/                        → atoms: color-dot, live-dot, delta-badge, icon-tile, meta-item,
-                                      initials-avatar, action-link
+                                      initials-avatar, identity, action-link, kbd, long-text, help-popover,
+                                      layout-preview
       layout/                       → page-header, section-card
       data-display/                 → stat, stat-group, status-pill, legend, list-row, stepper, phase-track,
-                                      threshold-bar, segmented-bar, progress-meter
+                                      threshold-bar, segmented-bar, progress-meter, bar-list, message-bubble
+      data-table/                   → data-table, toolbar, faceted-filter, column-header, view-options,
+                                      pagination, bulk-actions, select-column (pair with `useDataTable`)
+      feedback/                     → confirm-dialog, empty-state
+      navigation/                   → sub-nav
       charts/                       → area-trend-chart, chart-tooltip-panel, sparkline, mini-bars
-      inputs/                       → segmented-control
+      inputs/                       → segmented-control, search-input, select-field, password-input,
+                                      date-picker, choice-cards
+    layout/                         → app chrome: Sidebar, Header, CommandMenu (⌘K), SearchTrigger,
+                                      ConfigDrawer (theme settings), NavUser, TeamSwitcher, SignOutDialog,
+                                      NotificationsMenu, ActivitySheet; Header has `default` | `floating` variants
+  contexts/                         → preferences-context (sidebar/font/direction, cookie-backed),
+                                      search-context (⌘K open state)
+  hooks/                            → use-data-table (TanStack + nuqs URL state), use-dialog-state, …
   fake-db/<area>/                   → mock data (typed)
   types/<area>/                     → domain types
-  utils/format-utils.ts             → number / unit / currency / percent formatting
+  utils/format-utils.ts             → number / unit / currency / percent / initials formatting
+  utils/csv-utils.ts                → toCsv / parseCsv / downloadCsv
+  utils/toast-utils.tsx             → showSubmittedData, simulateRequest, pluralize
 ```
 
 ## Global component inventory (use these first)
 
-| Need                                        | Component                                                                                                                       |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Page title + copy + actions                 | `PageHeader`                                                                                                                    |
-| Any card section (title/description/action) | `SectionCard` (`variant="accent"`, `leading`)                                                                                   |
-| A labelled number / KPI / boxed mini stat   | `Stat` (`variant="plain" \| "tile"`, `size`)                                                                                    |
-| A row of KPIs (aligned labels, dividers)    | `StatGroup` (`variant="divided" \| "plain"`) wrapping `Stat`s                                                                   |
-| Status / phase chip                         | `StatusPill` (`tone`, `variant`, `size`)                                                                                        |
-| Trend %                                     | `DeltaBadge`                                                                                                                    |
-| Series key                                  | `Legend` (`size` sm for chart chrome, md standalone)                                                                            |
-| Any list (tasks, feed, orders, people)      | `ListRowGroup` + `ListRow` (`size`, `density`, `href`, leading/trailing/children)                                               |
-| Multi-step status                           | `Stepper` (`size` sm/md/lg, `align` spread/center, `tone`)                                                                      |
-| Proportional timeline with "today"          | `PhaseTrack`                                                                                                                    |
-| Value vs limit                              | `ThresholdBar` / `ThresholdMeter`                                                                                               |
-| Parts of a total                            | `SegmentedBar`                                                                                                                  |
-| Value vs target with bar                    | `ProgressMeter`                                                                                                                 |
-| Line/area trend, comparison series          | `AreaTrendChart` (built-in caption + legend, compact `axisFormatter`, full `valueFormatter`, latest marker, comparison tooltip) |
-| Any chart tooltip                           | `ChartTooltipPanel` (not `ChartTooltipContent` with `formatter` — that drops the series label)                                  |
-| Tiny trend                                  | `Sparkline`                                                                                                                     |
-| Recent-interval histogram                   | `MiniBars`                                                                                                                      |
-| Single-choice switch                        | `SegmentedControl`                                                                                                              |
-| Icon in a tinted square                     | `IconTile`                                                                                                                      |
-| Icon + short text                           | `MetaItem`                                                                                                                      |
-| "Go somewhere →" button                     | `ActionLink`                                                                                                                    |
-| Initials avatar                             | `InitialsAvatar`                                                                                                                |
+| Need                                        | Component                                                                                                                     |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Page title + copy + actions                 | `PageHeader`                                                                                                                  |
+| Any card section (title/description/action) | `SectionCard` (`variant="accent"`, `leading`)                                                                                 |
+| A labelled number / KPI / boxed mini stat   | `Stat` (`variant="plain" \| "tile"`, `size`)                                                                                  |
+| A row of KPIs (aligned labels, dividers)    | `StatGroup` (`variant="divided" \| "plain"`) wrapping `Stat`s                                                                 |
+| Status / phase chip                         | `StatusPill` (`tone`, `variant`, `size`)                                                                                      |
+| Trend %                                     | `DeltaBadge`                                                                                                                  |
+| Series key                                  | `Legend` (`size` sm for chart chrome, md standalone)                                                                          |
+| Any list (tasks, feed, orders, people)      | `ListRowGroup` + `ListRow` (`size`, `density`, `href` or `onSelect`/`selected`, leading/trailing/children)                    |
+| Multi-step status                           | `Stepper` (`size` sm/md/lg, `align` spread/center, `tone`)                                                                    |
+| Proportional timeline with "today"          | `PhaseTrack`                                                                                                                  |
+| Value vs limit                              | `ThresholdBar` / `ThresholdMeter`                                                                                             |
+| Parts of a total                            | `SegmentedBar`                                                                                                                |
+| Value vs target with bar                    | `ProgressMeter`                                                                                                               |
+| Line/area/bar trend, comparison series      | `AreaTrendChart` (series `variant` area/line/dashed/bar, caption + legend, `axisFormatter`, `valueFormatter`, comparison tip) |
+| Any chart tooltip                           | `ChartTooltipPanel` (not `ChartTooltipContent` with `formatter` — that drops the series label)                                |
+| Tiny trend                                  | `Sparkline`                                                                                                                   |
+| Recent-interval histogram                   | `MiniBars`                                                                                                                    |
+| Single-choice switch                        | `SegmentedControl`                                                                                                            |
+| Icon in a tinted square                     | `IconTile`                                                                                                                    |
+| Icon + short text                           | `MetaItem`                                                                                                                    |
+| "Go somewhere →" button                     | `ActionLink`                                                                                                                  |
+| Initials avatar (optional photo `src`)      | `InitialsAvatar`                                                                                                              |
+| Avatar + name + secondary line              | `Identity` (`size` sm/md) — names → initials with `toInitials`                                                                |
+| Data table (search, facets, sort, paging)   | `useDataTable` + `DataTable` / `DataTableToolbar` / `DataTablePagination` / `DataTableBulkActions` + `createSelectColumn`     |
+| Confirm / destructive / type-to-confirm     | `ConfirmDialog` (`variant`, `confirmText`)                                                                                    |
+| Empty list, coming soon, error page         | `EmptyState` (`size` sm/md/page, `icon` or `code`)                                                                            |
+| Ranked bars (top referrers, devices)        | `BarList`                                                                                                                     |
+| Chat / comment message                      | `MessageBubble` (`variant` incoming/outgoing)                                                                                 |
+| Section sub-navigation (settings)           | `SubNav`                                                                                                                      |
+| Search box                                  | `SearchInput`                                                                                                                 |
+| Select from an options array                | `SelectField`                                                                                                                 |
+| Password with show/hide                     | `PasswordInput`                                                                                                               |
+| Single date                                 | `DatePicker`                                                                                                                  |
+| Visual single choice (theme, layout)        | `ChoiceCards` + `LayoutPreview`                                                                                               |
+| Truncated text with tooltip                 | `LongText`                                                                                                                    |
+| Inline "?" help                             | `HelpPopover`                                                                                                                 |
+| Keyboard shortcut hint                      | `Kbd`                                                                                                                         |
 
 Extend an existing component with a variant before adding a new one. If you add one, add it to this table.
 
@@ -108,6 +137,10 @@ Extend an existing component with a variant before adding a new one. If you add 
 - Icons: `lucide-react` (`*Icon` names). Inside buttons mark them `data-icon='inline-start' | 'inline-end'`.
 - Charts: always via `ChartContainer` (`@/components/ui/chart`) so colours follow theme tokens.
 - Spacing rhythm: page sections `gap-6`; card content `gap-5`; grids `gap-6`. Main is `max-w-360`.
+- App preferences (sidebar variant / collapse mode, navbar variant, font, text direction) live in `usePreferences()` and are
+  persisted in cookies read by the root layout. Previews that must show a fixed scheme wrap content in `.light` /
+  `.dark` (both re-scope the tokens).
+- Table / list state that should be shareable (page, search, filters) goes in the URL via `nuqs`.
 - Accessibility: charts/bars get `role='img'` + `aria-label`; sections get `headingId`; interactive controls
   get labels; respect `motion-reduce`.
 

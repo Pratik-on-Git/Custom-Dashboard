@@ -7,7 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* `--app-font-sans` is set by `html[data-font]` (Theme Settings → Font) */
+  --font-sans: var(--app-font-sans, var(--font-geist-sans));
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -51,7 +52,9 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
+/* `.light` re-scopes the light tokens to a subtree (e.g. a light theme preview inside dark mode) */
+:root,
+.light {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -125,6 +128,13 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+html[data-font='inter'] {
+  --app-font-sans: var(--font-inter);
+}
+html[data-font='manrope'] {
+  --app-font-sans: var(--font-manrope);
 }
 
 .input-default {

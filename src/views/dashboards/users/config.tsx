@@ -56,7 +56,7 @@ export const orderNextAction: Record<OrderStage, string | null> = {
   New: 'Start',
   Picking: 'Packed',
   Packed: 'Dispatch',
-  'On the road': 'Delivered',
+  'In Transit': 'Delivered',
   Delivered: null
 }
 

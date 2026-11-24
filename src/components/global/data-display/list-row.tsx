@@ -55,6 +55,12 @@ type ListRowProps = VariantProps<typeof listRowVariants> &
     /** Makes the title + description block a link */
     href?: string
 
+    /** Makes the whole row a button (selectable lists: inbox, pickers). Pair with `selected`. */
+    onSelect?: () => void
+
+    /** Highlights the row and marks it `aria-current` (with `onSelect`) */
+    selected?: boolean
+
     /** Icon tile, checkbox, avatar… */
     leading?: ReactNode
 
@@ -71,13 +77,16 @@ type ListRowProps = VariantProps<typeof listRowVariants> &
 
 /**
  * Global: the one row layout every list uses (tasks, activity, orders, people…).
- * Variations: `size` (text scale) and `density` (vertical rhythm). Wrap rows in `<ListRowGroup>` for dividers.
+ * Variations: `size` (text scale), `density` (vertical rhythm), and link (`href`) or selectable (`onSelect`) rows.
+ * Wrap rows in `<ListRowGroup>` for dividers.
  */
 const ListRow = ({
   leading,
   title,
   description,
   href,
+  onSelect,
+  selected,
   trailing,
   children,
   muted,
@@ -101,6 +110,30 @@ const ListRow = ({
   )
 
   const textClassName = cn('flex min-w-0 flex-1 flex-col gap-0.5', muted && 'opacity-60')
+
+  if (onSelect) {
+    return (
+      <li data-slot='list-row' className={cn('flex min-w-0 flex-col', className)}>
+        <button
+          type='button'
+          onClick={onSelect}
+          aria-current={selected || undefined}
+          className={cn(
+            listRowVariants({ density }),
+            'hover:bg-muted/60 focus-visible:ring-ring/50 -mx-2 rounded-lg px-2 text-start outline-none focus-visible:ring-3',
+            selected && 'bg-muted hover:bg-muted'
+          )}
+        >
+          <span className='flex min-w-0 items-center gap-3'>
+            {leading}
+            <span className={textClassName}>{text}</span>
+            {trailing && <span className='flex shrink-0 items-center gap-2 self-start'>{trailing}</span>}
+          </span>
+          {children}
+        </button>
+      </li>
+    )
+  }
 
   return (
     <li data-slot='list-row' className={cn(listRowVariants({ density }), className)}>

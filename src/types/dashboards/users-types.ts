@@ -93,7 +93,7 @@ export interface HouseTraps {
   counts: TrapCount[]
 }
 
-export const ORDER_STAGES = ['New', 'Picking', 'Packed', 'On the road', 'Delivered'] as const
+export const ORDER_STAGES = ['New', 'Picking', 'Packed', 'In Transit', 'Delivered'] as const
 
 export type OrderStage = (typeof ORDER_STAGES)[number]
 
